@@ -54,11 +54,16 @@ const initializeClient = async ({
   let apiKey = userProvidesKey ? userValues?.apiKey : credentials[endpoint];
   let baseURL = userProvidesURL ? userValues?.baseURL : baseURLOptions[endpoint];
 
+  const username = req.user.username;
+
   const clientOptions = {
     contextStrategy,
-    proxy: PROXY ?? null,
     debug: isEnabled(DEBUG_OPENAI),
     reverseProxyUrl: baseURL ? baseURL : null,
+    headers: { 'X-User-Name': username },
+    proxy: PROXY ?? null,
+    req,
+    res,
     ...endpointOption,
   };
 
