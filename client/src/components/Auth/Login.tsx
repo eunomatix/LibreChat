@@ -19,6 +19,10 @@ function Login() {
     if (isAuthenticated) {
       navigate('/c/new', { replace: true });
     }
+    
+    if (!isAuthenticated) {
+      navigate('/oauth/openid', {replace: true});
+    }
   }, [isAuthenticated, navigate]);
 
   if (!startupConfig) {
