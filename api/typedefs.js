@@ -273,6 +273,12 @@
  */
 
 /**
+ * @exports TPayload
+ * @typedef {import('librechat-data-provider').TPayload} TPayload
+ * @memberof typedefs
+ */
+
+/**
  * @exports TAzureModelConfig
  * @typedef {import('librechat-data-provider').TAzureModelConfig} TAzureModelConfig
  * @memberof typedefs
@@ -471,8 +477,26 @@
  */
 
 /**
+ * @exports MongooseSchema
+ * @typedef {import('mongoose').Schema} MongooseSchema
+ * @memberof typedefs
+ */
+
+/**
+ * @exports ObjectId
+ * @typedef {import('mongoose').Types.ObjectId} ObjectId
+ * @memberof typedefs
+ */
+
+/**
  * @exports MongoFile
  * @typedef {import('~/models/schema/fileSchema.js').MongoFile} MongoFile
+ * @memberof typedefs
+ */
+
+/**
+ * @exports MongoUser
+ * @typedef {import('~/models/schema/userSchema.js').MongoUser} MongoUser
  * @memberof typedefs
  */
 
