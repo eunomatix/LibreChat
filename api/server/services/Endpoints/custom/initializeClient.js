@@ -117,8 +117,10 @@ const initializeClient = async ({ req, res, endpointOption }) => {
     endpointTokenConfig,
   };
 
+  const username = req.user.username;
   const clientOptions = {
     reverseProxyUrl: baseURL ?? null,
+    headers: { 'X-User-Name': username },
     proxy: PROXY ?? null,
     req,
     res,
