@@ -45,6 +45,7 @@ const initializeClient = async ({ req, res, endpointOption }) => {
   let baseURL = userProvidesURL ? userValues?.baseURL : baseURLOptions[endpoint];
 
   const username = req.user.username;
+
   const clientOptions = {
     debug: isEnabled(DEBUG_OPENAI),
     contextStrategy,

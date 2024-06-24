@@ -120,12 +120,15 @@ const initializeClient = async ({ req, res, endpointOption }) => {
   const username = req.user.username;
   const clientOptions = {
     reverseProxyUrl: baseURL ?? null,
-    headers: { 'X-User-Name': username },
     proxy: PROXY ?? null,
     req,
     res,
     ...customOptions,
     ...endpointOption,
+    headers: {
+      ...(customOptions.headers || {}),
+      'X-User-Name': username,
+    },
   };
 
   const client = new OpenAIClient(apiKey, clientOptions);
