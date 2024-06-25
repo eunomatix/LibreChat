@@ -3,13 +3,22 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useGetStartupConfig } from 'librechat-data-provider/react-query';
 import type { TStartupConfig } from 'librechat-data-provider';
 import AuthLayout from '~/components/Auth/AuthLayout';
-import { useLocalize } from '~/hooks';
+
+// Removing useLocalize header giving custom params
+//import { useLocalize } from '~/hooks';
+
+// const headerMap = {
+//   '/login': 'com_auth_welcome_back',
+//   '/register': 'com_auth_create_account',
+//   '/forgot-password': 'com_auth_reset_password',
+//   '/reset-password': 'com_auth_reset_password',
+// };
 
 const headerMap = {
-  '/login': 'com_auth_welcome_back',
-  '/register': 'com_auth_create_account',
-  '/forgot-password': 'com_auth_reset_password',
-  '/reset-password': 'com_auth_reset_password',
+  '/login': 'Redirecting ...',
+  '/register': 'Create your account',
+  '/forgot-password': 'Reset your password',
+  '/reset-password': 'Set a new password',
 };
 
 export default function StartupLayout({ isAuthenticated }: { isAuthenticated?: boolean }) {
@@ -23,7 +32,7 @@ export default function StartupLayout({ isAuthenticated }: { isAuthenticated?: b
   } = useGetStartupConfig({
     enabled: isAuthenticated ? startupConfig === null : true,
   });
-  const localize = useLocalize();
+  // const localize = useLocalize();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -57,7 +66,7 @@ export default function StartupLayout({ isAuthenticated }: { isAuthenticated?: b
 
   return (
     <AuthLayout
-      header={headerText ? localize(headerText) : localize(headerMap[location.pathname])}
+      header={headerText || headerMap[location.pathname]}
       isFetching={isFetching}
       startupConfig={startupConfig}
       startupConfigError={startupConfigError}
