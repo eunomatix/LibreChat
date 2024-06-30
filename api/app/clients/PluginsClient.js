@@ -265,6 +265,8 @@ class PluginsClient extends OpenAIClient {
       onToolEnd,
     } = await this.handleStartMethods(message, opts);
 
+    this.options.headers['X-Conversation-Id'] = conversationId;
+
     if (opts.progressCallback) {
       opts.onProgress = opts.progressCallback.call(null, {
         ...(opts.progressOptions ?? {}),
