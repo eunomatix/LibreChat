@@ -43,6 +43,8 @@ router.get('/', async function (req, res) {
       openidImageUrl: process.env.OPENID_IMAGE_URL,
       ldapLoginEnabled,
       serverDomain: process.env.DOMAIN_SERVER || 'http://localhost:3080',
+      openidIssuerUrl: process.env.OPENID_ISSUER,
+      openidClientId: process.env.OPENID_CLIENT_ID,
       emailLoginEnabled,
       registrationEnabled: !ldapLoginEnabled && isEnabled(process.env.ALLOW_REGISTRATION),
       socialLoginEnabled: isEnabled(process.env.ALLOW_SOCIAL_LOGIN),
