@@ -38,12 +38,14 @@ export default defineConfig({
     strictPort: false,
     proxy: {
       '/api': {
-        target: 'http://localhost:3080',
+        target: 'https://lab.eunomatix.com:6116',
         changeOrigin: true,
+        secure: false,
       },
       '/oauth': {
-        target: 'http://localhost:3080',
+        target: 'https://lab.eunomatix.com:6116',
         changeOrigin: true,
+        secure: false,
       },
     },
   },
