@@ -121,6 +121,13 @@ const userSchema = mongoose.Schema(
       type: Date,
       expires: 604800, // 7 days in seconds
     },
+    token: {
+      access_token: String,
+      id_token: String,
+      refresh_token: String,
+      token_type: String,
+      expires_at: Number,
+    },
   },
   { timestamps: true },
 );
