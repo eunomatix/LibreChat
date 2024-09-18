@@ -118,6 +118,8 @@ const initializeClient = async ({ req, res, endpointOption }) => {
   };
 
   const username = req.user.username;
+  const token = req.user.token.accessToken;
+
   const clientOptions = {
     reverseProxyUrl: baseURL ?? null,
     proxy: PROXY ?? null,
@@ -128,6 +130,7 @@ const initializeClient = async ({ req, res, endpointOption }) => {
     headers: {
       ...(customOptions.headers || {}),
       'X-User-Name': username,
+      AccessToken: token,
     },
   };
 

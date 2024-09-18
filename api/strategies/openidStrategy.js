@@ -163,6 +163,13 @@ async function setupOpenId() {
               email: userinfo.email || '',
               emailVerified: userinfo.email_verified || false,
               name: fullName,
+              token: {
+                access_token: tokenset.access_token,
+                id_token: tokenset.id_token,
+                refresh_token: tokenset.refresh_token,
+                token_type: tokenset.token_type,
+                expires_at: tokenset.expires_at,
+              },
             };
             user = await createUser(user, true, true);
           } else {
@@ -170,6 +177,13 @@ async function setupOpenId() {
             user.openidId = userinfo.sub;
             user.username = username;
             user.name = fullName;
+            user.token = {
+              access_token: tokenset.access_token,
+              id_token: tokenset.id_token,
+              refresh_token: tokenset.refresh_token,
+              token_type: tokenset.token_type,
+              expires_at: tokenset.expires_at,
+            };
           }
 
           if (userinfo.picture && !user.avatar?.includes('manual=true')) {
