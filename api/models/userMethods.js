@@ -46,10 +46,16 @@ const updateUser = async function (userId, updateData) {
     $set: updateData,
     $unset: { expiresAt: '' }, // Remove the expiresAt field to prevent TTL
   };
-  return await User.findByIdAndUpdate(userId, updateOperation, {
+  const updatedUser = await User.findByIdAndUpdate(userId, updateOperation, {
     new: true,
     runValidators: true,
   }).lean();
+
+  // Remove sensitive token information before returning
+  if (updatedUser) {
+    delete updatedUser.token;
+  }
+  return updatedUser;
 };
 
 /**
@@ -70,11 +76,23 @@ const createUser = async (data, disableTTL = true, returnUser = false) => {
     delete userData.expiresAt;
   }
 
-  const user = await User.create(userData);
-  if (returnUser) {
-    return user.toObject();
+  try {
+    const user = await User.create(userData);
+    if (returnUser) {
+      const userObject = user.toObject();
+      // Exclude sensitive token information from the returned user object
+      delete userObject.token;
+      return userObject;
+    }
+    return user._id;
+  } catch (error) {
+    if (error.code === 11000) {
+      // Duplicate key error code
+      throw new Error(`User with \`_id\` ${data._id} already exists.`);
+    } else {
+      throw error;
+    }
   }
-  return user._id;
 };
 
 /**

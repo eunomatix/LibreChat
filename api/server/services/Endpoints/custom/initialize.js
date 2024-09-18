@@ -124,6 +124,9 @@ const initializeClient = async ({ req, res, endpointOption }) => {
     customOptions.streamRate = allConfig.streamRate;
   }
 
+  const username = req.user.username;
+  const token = req.user.token.accessToken;
+
   const clientOptions = {
     reverseProxyUrl: baseURL ?? null,
     proxy: PROXY ?? null,
@@ -131,6 +134,11 @@ const initializeClient = async ({ req, res, endpointOption }) => {
     res,
     ...customOptions,
     ...endpointOption,
+    headers: {
+      ...(customOptions.headers || {}),
+      'X-User-Name': username,
+      AccessToken: token,
+    },
   };
 
   const client = new OpenAIClient(apiKey, clientOptions);
