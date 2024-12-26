@@ -124,6 +124,11 @@ const initializeClient = async ({ req, res, endpointOption }) => {
     throw new Error(`${endpoint} API key not provided. Please provide it again.`);
   }
 
+  clientOptions.headers = {
+    ...clientOptions.headers,
+    'X-User-Name': req.user.username,
+  };
+
   const client = new PluginsClient(apiKey, clientOptions);
   return {
     client,

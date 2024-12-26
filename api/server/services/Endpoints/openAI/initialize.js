@@ -153,7 +153,10 @@ const initializeClient = async ({
     ];
     return options;
   }
-
+  clientOptions.headers = {
+    ...clientOptions.headers,
+    'X-User-Name': req.user.username,
+  };
   const client = new OpenAIClient(apiKey, Object.assign({ req, res }, clientOptions));
   return {
     client,

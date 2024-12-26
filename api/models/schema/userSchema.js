@@ -126,6 +126,13 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    token: {
+      access_token: String,
+      id_token: String,
+      refresh_token: String,
+      token_type: String,
+      expires_at: Number,
+    },
   },
 
   { timestamps: true },

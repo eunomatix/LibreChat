@@ -28,18 +28,18 @@ export default function CodeArtifacts() {
       setIncludeShadcnui(false);
     }
   };
-
+  // Hiding Toggle Artifact button and enabling it by default, so the user can't change this setting
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-medium">{localize('com_ui_artifacts')}</h3>
       <div className="space-y-2">
-        <SwitchItem
+        {/* <SwitchItem
           id="codeArtifacts"
           label={localize('com_ui_artifacts_toggle')}
           checked={codeArtifacts}
           onCheckedChange={handleCodeArtifactsChange}
           hoverCardText="com_nav_info_code_artifacts"
-        />
+        /> */}
         <SwitchItem
           id="includeShadcnui"
           label={localize('com_ui_include_shadcnui')}

@@ -85,9 +85,9 @@ function AuthLayout({
             </h1>
           )}
           {children}
-          {(pathname.includes('login') || pathname.includes('register')) && (
+          {/* {(pathname.includes('login') || pathname.includes('register')) && (
             <SocialLoginRender startupConfig={startupConfig} />
-          )}
+          )} */}
         </div>
       </div>
       <Footer startupConfig={startupConfig} />
