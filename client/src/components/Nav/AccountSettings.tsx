@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil';
 import * as Select from '@ariakit/react/select';
-import { Fragment, useState, memo } from 'react';
+import { Fragment, useState, memo, useMemo } from 'react';
 import { FileText, LogOut } from 'lucide-react';
 import { useGetUserBalance, useGetStartupConfig } from 'librechat-data-provider/react-query';
 import { LinkIcon, GearIcon, DropdownMenuSeparator } from '~/components';
@@ -15,7 +15,7 @@ import store from '~/store';
 function AccountSettings() {
   const localize = useLocalize();
   const { user, isAuthenticated, logout } = useAuthContext();
-  const { data: startupConfig } = useGetStartupConfig();
+  const { data: startupConfig, isLoading } = useGetStartupConfig();
   const balanceQuery = useGetUserBalance({
     enabled: !!isAuthenticated && startupConfig?.checkBalance,
   });
@@ -24,6 +24,28 @@ function AccountSettings() {
 
   const avatarSrc = useAvatar(user);
   const name = user?.avatar ?? user?.username ?? '';
+
+  const keycloakLogoutUrl = useMemo(() => {
+    if (!isLoading && startupConfig) {
+      const url = `${startupConfig.openidIssuerUrl}/protocol/openid-connect/logout?post_logout_redirect_uri=${startupConfig.serverDomain}&client_id=${startupConfig.openidClientId}`;
+      console.log('Keycloak Logout URL:', url);
+      return url;
+    }
+    return '';
+  }, [isLoading, startupConfig]);
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      if (keycloakLogoutUrl) {
+        window.location.href = keycloakLogoutUrl;
+      } else {
+        console.error('Keycloak logout URL not set.');
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+  };
 
   return (
     <Select.SelectProvider>
@@ -114,9 +136,10 @@ function AccountSettings() {
         <DropdownMenuSeparator />
         <Select.SelectItem
           aria-selected={true}
-          onClick={() => logout()}
+          onClick={handleLogout}
           value="logout"
           className="select-item text-sm"
+          disabled={isLoading || !keycloakLogoutUrl}
         >
           <LogOut className="icon-md" />
           {localize('com_nav_log_out')}
