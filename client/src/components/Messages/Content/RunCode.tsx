@@ -11,6 +11,7 @@ import { cn, normalizeLanguage } from '~/utils';
 import { useToastContext } from '~/Providers';
 
 const RunCode: React.FC<CodeBarProps> = React.memo(({ lang, codeRef, blockIndex }) => {
+  return null;
   const localize = useLocalize();
   const { showToast } = useToastContext();
   const execute = useToolCallMutation(Tools.execute_code, {
